@@ -1,57 +1,72 @@
 #include<stdio.h>
 #include<conio.h>
+#include<math.h>
 #include<graphics.h>
 
 int main()
 {
-   int gd=DETECT,gm=0;
-   int xc,yc,a,b,x,y,d;
-   initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
-   printf("Enter center of ellipse, major axis and minor axis respectively: ");
-   scanf("%d%d%d%d",&xc,&yc,&a,&b);
+    int xc,yc,rx,ry,x,y,p1,p2,dx,dy;
+    int gd=DETECT,gm=0;
+    initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
+    printf("Enter center, major axis and minor axis of ellipse: ");
+    scanf("%d%d%d%d",&xc,&yc,&rx,&ry);
+    x=0;
+    y=ry;
+  //  putpixel(x,y,WHITE);
+    dx=2*ry*ry*x;
+    dy=2*rx*rx*y;
 
-   x=0;
-   y=b;
-   d = b*b - a*a * b + a*a / 4;
+    p1=ry*ry-rx*rx*ry+(0.25)*rx*rx;
 
-      while (2*b*b * x < 2*a*a * y) {
-        putpixel(xc + x, yc + y, WHITE);
-        putpixel(xc - x, yc + y, WHITE);
-        putpixel(xc + x, yc - y, WHITE);
-        putpixel(xc - x, yc - y, WHITE);
+    while(dx<dy)
+    {
+	if(p1>=0)
+	{
+	    x=x+1;
+	    y=y-1;
+	    dx=2*ry*ry*x;
+	    dy=2*rx*rx*y;
+	    p1=p1+dx-dy+ry*ry;
+	}
+	else{
+	    x=x+1;
+	    dx=2*ry*ry*x;
+	    p1=p1+dx+ry*ry;
+	}
 
-        if (d >= 0) {
-            y--;
-            d -= 4*a*a * y;
-        }
 
-        x++;
-        d += 2*b*b * x + b*b;
+	putpixel(xc+x,yc+y,WHITE);
+	putpixel(xc+x,yc-y,WHITE);
+	putpixel(xc-x,yc+y,WHITE);
+	putpixel(xc-x,yc-y,WHITE);
+
     }
 
-    d = b*b * (x + 0.5) * (x + 0.5) + a*a * (y - 1) * (y - 1) - a*a * b*b;
+    p2=ry*ry*pow((x+0.5),2)+rx*rx*pow((y-1),2)-rx*rx*ry*ry;
 
-    while (y >= 0) {
-        putpixel(xc + x, yc + y, WHITE);
-        putpixel(xc - x, yc + y, WHITE);
-        putpixel(xc + x, yc - y, WHITE);
-        putpixel(xc - x, yc - y, WHITE);
-
-        if (d <= 0) {
-            x++;
-            d += 4*b*b * x;
-        }
-
-        y--;
-        d += 2*a*a * y - a*a;
+    while(y>0)
+    {
+	if(p2<=0)
+	{
+	    x=x+1;
+	    y=y-1;
+	    dx=2*ry*ry*x;
+	    dy=2*rx*rx*y;
+	    p2=p2+dx-dy+rx*rx;
+	}
+	else{
+	    y=y-1;
+	    dy=2*rx*rx*y;
+	    p2=p2-dy+rx*rx;
+	}
+	putpixel(xc+x,yc+y,WHITE);
+	putpixel(xc+x,yc-y,WHITE);
+	putpixel(xc-x,yc+y,WHITE);
+	putpixel(xc-x,yc-y,WHITE);
     }
 
-   
-   getch();
-   closegraph();
-   return 0;
+    getch();
+    closegraph();
+
+    return 0;
 }
-
-
-
-
