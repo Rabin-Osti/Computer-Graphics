@@ -28,7 +28,7 @@ int main()
    y=y1;
    putpixel(x,y,WHITE);
 
-   while(x!=x2)
+   for(i=1;i<=steps;i++)
    {
       x=x+ix;
       y=y+iy;

@@ -34,11 +34,11 @@ int main()
       p = 2*dy-dx;
       for(i=0;i<=dx;i++)
       {
-         if(p>0)
+	 if(p>=0)
          {
             x1=x1+ix;
             y1=y1+iy;
-            p=p+2*dy-dx;
+            p=p+2*dy-2*dx;
          }
          else{
             x1=x1+ix;
@@ -56,7 +56,7 @@ int main()
          {
             x1=x1+ix;
             y1=y1+iy;
-            p=p+2*dx-dy;
+            p=p+2*dx-2*dy;
          }
          else{
             x1=x1;
